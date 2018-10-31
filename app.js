@@ -160,6 +160,7 @@ app.locals.semver = semver;
 app.use('/', routes.indexRoute);
 app.use('/about/', routes.aboutRoute);
 app.use('/alpha/?|/beta/?', routes.redirectToRoot);
+app.use(/(\/extras\/birthday|\/extras\/popular|\/extras|\/birthday|\/popular)\/?/, routes.redirectToRoot);
 app.use('/books/', routes.booksRoute);
 app.use('/bootlint/', routes.bootlintRoute);
 app.use('/bootswatch/', routes.bootswatchRoute);
@@ -186,12 +187,6 @@ const map = sitemap({
             hide: true  // exclude this route from xml and txt
         },
         '/404/': {
-            hide: true
-        },
-        '/alpha/': {
-            hide: true
-        },
-        '/beta/': {
             hide: true
         },
         '/books/': {
