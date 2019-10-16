@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const url = require('url');
 const { generateSri, capitalize } = require('../lib/helpers');
 const { app, files } = require('../config');
 
@@ -58,11 +59,9 @@ function generateSRI(file) {
 function appendLocals(req, res) {
     const siteUrl = getCurrentSiteurl(req);
     const pageUrl = req.originalUrl;
-    // OK, hack-ish way...
-    const pathname = pageUrl.split('?')[0];
-    const canonicalUrl = new URL(pathname, app.siteurl);
+    const canonicalUrl = url.resolve(app.siteurl, url.parse(pageUrl).pathname);
     const theme = getThemeQuery(req);
-    const bodyClass = generateBodyClass(pathname);
+    const bodyClass = generateBodyClass(pageUrl);
 
     const locals = {
         siteUrl,
